@@ -1,0 +1,6 @@
+@Understand_OOP_HostAddress = http://localhost:5293
+
+GET {{Understand_OOP_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
