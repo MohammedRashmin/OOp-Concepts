@@ -1,8 +1,8 @@
 [
   {
-    "ContainingType": "Understand_OOP.Controllers.UserController",
-    "Method": "Createuser",
-    "RelativePath": "api/User",
+    "ContainingType": "UserController",
+    "Method": "CreateUser",
+    "RelativePath": "api/user/create",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

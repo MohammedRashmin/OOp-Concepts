@@ -19,8 +19,11 @@ builder.Services.AddDbContext<DataDbContext>(option => option.UseSqlServer(build
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepo,  UserRepo>();
-builder.Services.AddScoped<UserRepo>(); 
+builder.Services.AddScoped<UserRepo>();
 builder.Services.AddScoped<UserService>();
+
+
+
 
 var app = builder.Build();
 
@@ -30,6 +33,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMiddleware<RequestLoggingMiddleware>();
+app.UseMiddleware<PerformanceMonitoringMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

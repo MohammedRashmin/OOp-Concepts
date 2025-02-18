@@ -11,11 +11,17 @@ namespace Understand_OOP.Database
 
         public DbSet<User> Users { get; set; }
 
-        public DbSet<Product> Products { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .Property(u => u.Role)
+                .HasColumnType("nvarchar(50)");
 
+            modelBuilder.Entity<User>()
+                .Property(u => u.DateCreated)
+                .HasColumnType("datetime2");
 
-
-
-
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

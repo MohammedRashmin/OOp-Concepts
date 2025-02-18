@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Understand-OOP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a2ea025b4d04fea19dc0252def457f91814aaed7")]
 [assembly: System.Reflection.AssemblyProductAttribute("Understand-OOP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Understand-OOP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,66 +1,53 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Understand_OOP.DTOs;
 using Understand_OOP.IServ;
-using Understand_OOP.Service;
+using Microsoft.Extensions.Logging;
 
-namespace Understand_OOP.Controllers
+[Route("api/user")]
+[ApiController]
+public class UserController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UserController : ControllerBase
+    private readonly IUserService _userService;
+    private readonly ILogger<UserController> _logger;
+
+    public UserController(IUserService userService, ILogger<UserController> logger)
     {
-        private readonly IUserService _userService;  
+        _userService = userService;
+        _logger = logger;
+    }
 
-        public UserController(UserService userService)
+    [HttpPost("create")]
+    public async Task<IActionResult> CreateUser([FromBody] UserRequestDto userRequestDto)
+    {
+        if (userRequestDto == null)
         {
-            _userService = userService;
-        }
-        [HttpPost]
-        public async Task<IActionResult> Createuser(UserRequestDto userRequestDto)
-        {
-            try
-            {
-                var result = await _userService.CreateUser(userRequestDto);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _logger.LogWarning("Invalid user creation request.");
+            return BadRequest("Invalid request data.");
         }
 
+        if (!ModelState.IsValid)
+        {
+            _logger.LogWarning("Invalid user creation request model state.");
+            return BadRequest(ModelState);
+        }
 
-        //[HttpPost("Login")]
-        //public async Task<IActionResult> Login(LoginRegDto loginrequest)
-        //{
-        //    try
-        //    {
-        //        var data = await _userService.Login(loginrequest);
-        //        return Ok(data);
+        try
+        {
+            bool isCreated = await _userService.CreateUser(userRequestDto);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+            if (!isCreated)
+            {
+                _logger.LogWarning($"User {userRequestDto.Email} could not be created.");
+                return BadRequest("User could not be created.");
+            }
 
-        //[HttpGet("AllUsers")]
-        //public async Task<IActionResult> AllUsers()
-        //{
-        //    try
-        //    {
-
-        //        var data = await _userService.AllUsers();
-        //        return Ok(data);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+            _logger.LogInformation($"User {userRequestDto.Email} created successfully.");
+            return Ok(new { message = "User created successfully!" });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error in user creation: {ex.Message}");
+            return StatusCode(500, new { error = ex.Message });
+        }
     }
 }

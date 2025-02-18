@@ -171,3 +171,4 @@ D:\Pet project\Pet2\Backend\Understand-OOP\Understand-OOP\obj\Debug\net8.0\Under
 D:\Pet project\Pet2\Backend\Understand-OOP\Understand-OOP\obj\Debug\net8.0\Understand-OOP.genruntimeconfig.cache
 D:\Pet project\Pet2\Backend\Understand-OOP\Understand-OOP\obj\Debug\net8.0\ref\Understand-OOP.dll
 D:\Pet project\Pet2\Backend\Understand-OOP\Understand-OOP\bin\Debug\net8.0\BCrypt.Net-Core.dll
+D:\Pet project\Pet2\Backend\Understand-OOP\Understand-OOP\obj\Debug\net8.0\Understand-OOP.sourcelink.json

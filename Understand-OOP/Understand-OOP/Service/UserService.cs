@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.Extensions.Logging;
 using Understand_OOP.Database.Entities;
 using Understand_OOP.DTOs;
 using Understand_OOP.IRep;
 using Understand_OOP.IServ;
-using Understand_OOP.Repository;
 
 namespace Understand_OOP.Service
 {
@@ -12,7 +11,7 @@ namespace Understand_OOP.Service
         private readonly IUserRepo _userRepo;
         private readonly ILogger<UserService> _logger;
 
-        public UserService(UserRepo userRepo, ILogger<UserService> logger)
+        public UserService(IUserRepo userRepo, ILogger<UserService> logger)
         {
             _userRepo = userRepo;
             _logger = logger;
@@ -28,8 +27,8 @@ namespace Understand_OOP.Service
                 {
                     Name = userRequestDto.Name,
                     Email = userRequestDto.Email,
-                    Password = userRequestDto.Password
                 };
+                user.SetPassword(userRequestDto.Password);
 
                 var result = await _userRepo.CreateUser(user);
 
@@ -41,7 +40,7 @@ namespace Understand_OOP.Service
             catch (Exception ex)
             {
                 _logger.LogError($"Error in CreateUser: {ex.Message}");
-                return false;
+                throw;
             }
         }
 
@@ -51,5 +50,4 @@ namespace Understand_OOP.Service
                 throw new Exception("Email and Password are required.");
         }
     }
-    }
-
+}
